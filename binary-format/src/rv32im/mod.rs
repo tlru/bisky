@@ -226,70 +226,76 @@ pub fn instruction_name(ir: u32) -> &'static str {
 }
 
 /// All immediate and offset values are already sign-extended and their underlying repr can be expected to be two's complement
-#[derive(Copy, Clone, Debug)]
-pub enum Rv32ImInstruction {
-    /// Special
-    Lui(u8 /* rd */, u32 /* imm */),
-    Auipc(u8 /* rd */, u32 /* imm */),
-    /// Branching
-    Jal(u8 /* rd */, u32 /* offset */),
-    Jalr(u8 /* rd */, u8 /* rs1 */, u32 /* offset */),
-    Beq(u8 /* rs1 */, u8 /* rs2 */, u32 /* offset */),
-    Bne(u8 /* rs1 */, u8 /* rs2 */, u32 /* offset */),
-    Blt(u8 /* rs1 */, u8 /* rs2 */, u32 /* offset */),
-    Bge(u8 /* rs1 */, u8 /* rs2 */, u32 /* offset */),
-    Bltu(u8 /* rs1 */, u8 /* rs2 */, u32 /* offset */),
-    Bgeu(u8 /* rs1 */, u8 /* rs2 */, u32 /* offset */),
-    /// Load/store
-    Lb(u8 /* rd */, u8 /* rs1 */, u32 /* offset(rs1) */),
-    Lh(u8 /* rd */, u8 /* rs1 */, u32 /* offset(rs1) */),
-    Lw(u8 /* rd */, u8 /* rs1 */, u32 /* offset(rs1) */),
-    Lbu(u8 /* rd */, u8 /* rs1 */, u32 /* offset(rs1) */),
-    Lhu(u8 /* rd */, u8 /* rs1 */, u32 /* offset(rs1) */),
-    /// Store
-    Sb(u8 /* rs2 */, u8 /* rs1 */, u32 /* offset(rs1) */),
-    Sh(u8 /* rs2 */, u8 /* rs1 */, u32 /* offset(rs1) */),
-    Sw(u8 /* rs2 */, u8 /* rs1 */, u32 /* offset(rs1) */),
-    /// Arithmetic
-    Add(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
-    Addi(u8 /* rd */, u8 /* rs1 */, u32 /* imm */),
-    Sub(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
-    /// Mul extension
-    Mul(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
-    Mulh(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
-    Mulhsu(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
-    Mulhu(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
-    Div(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
-    Divu(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
-    Rem(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
-    Remu(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
-    /// Bitwise
-    /// Where our canonical ordering is AND, OR, XOR
-    And(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
-    Andi(u8 /* rd */, u8 /* rs1 */, u32 /* imm */),
-    Xor(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
-    Xori(u8 /* rd */, u8 /* rs1 */, u32 /* imm */),
-    Or(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
-    Ori(u8 /* rd */, u8 /* rs1 */, u32 /* imm */),
-    /// Set
-    Slt(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
-    Slti(u8 /* rd */, u8 /* rs1 */, u32 /* imm */),
-    Sltu(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
-    Sltiu(u8 /* rd */, u8 /* rs1 */, u32 /* imm */),
-    /// Shift
-    Sll(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
-    Slli(u8 /* rd */, u8 /* rs1 */, u32 /* imm */),
-    Srl(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
-    Srli(u8 /* rd */, u8 /* rs1 */, u32 /* imm */),
-    /// Arithmetic Shift
-    Sra(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
-    Srai(u8 /* rd */, u8 /* rs1 */, u32 /* imm */),
+// put in module for rustfmt::skip
+#[rustfmt::skip]
+mod ix {
+    use super::*;
+    #[derive(Copy, Clone, Debug)]
+    pub enum Rv32ImInstruction {
+        /// Special
+        Lui(u8 /* rd */, u32 /* imm */),
+        Auipc(u8 /* rd */, u32 /* imm */),
+        /// Branching
+        Jal(u8 /* rd */, u32 /* offset */),
+        Jalr(u8 /* rd */, u8 /* rs1 */, u32 /* offset */),
+        Beq(u8 /* rs1 */, u8 /* rs2 */, u32 /* offset */),
+        Bne(u8 /* rs1 */, u8 /* rs2 */, u32 /* offset */),
+        Blt(u8 /* rs1 */, u8 /* rs2 */, u32 /* offset */),
+        Bge(u8 /* rs1 */, u8 /* rs2 */, u32 /* offset */),
+        Bltu(u8 /* rs1 */, u8 /* rs2 */, u32 /* offset */),
+        Bgeu(u8 /* rs1 */, u8 /* rs2 */, u32 /* offset */),
+        /// Load/store
+        Lb(u8 /* rd */, u8 /* rs1 */, u32 /* offset(rs1) */),
+        Lh(u8 /* rd */, u8 /* rs1 */, u32 /* offset(rs1) */),
+        Lw(u8 /* rd */, u8 /* rs1 */, u32 /* offset(rs1) */),
+        Lbu(u8 /* rd */, u8 /* rs1 */, u32 /* offset(rs1) */),
+        Lhu(u8 /* rd */, u8 /* rs1 */, u32 /* offset(rs1) */),
+        /// Store
+        Sb(u8 /* rs2 */, u8 /* rs1 */, u32 /* offset(rs1) */),
+        Sh(u8 /* rs2 */, u8 /* rs1 */, u32 /* offset(rs1) */),
+        Sw(u8 /* rs2 */, u8 /* rs1 */, u32 /* offset(rs1) */),
+        /// Arithmetic
+        Add(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
+        Addi(u8 /* rd */, u8 /* rs1 */, u32 /* imm */),
+        Sub(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
+        /// Mul extension
+        Mul(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
+        Mulh(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
+        Mulhsu(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
+        Mulhu(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
+        Div(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
+        Divu(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
+        Rem(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
+        Remu(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
+        /// Bitwise
+        /// Where our canonical ordering is AND, OR, XOR
+        And(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
+        Andi(u8 /* rd */, u8 /* rs1 */, u32 /* imm */),
+        Xor(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
+        Xori(u8 /* rd */, u8 /* rs1 */, u32 /* imm */),
+        Or(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
+        Ori(u8 /* rd */, u8 /* rs1 */, u32 /* imm */),
+        /// Set
+        Slt(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
+        Slti(u8 /* rd */, u8 /* rs1 */, u32 /* imm */),
+        Sltu(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
+        Sltiu(u8 /* rd */, u8 /* rs1 */, u32 /* imm */),
+        /// Shift
+        Sll(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
+        Slli(u8 /* rd */, u8 /* rs1 */, u32 /* imm */),
+        Srl(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
+        Srli(u8 /* rd */, u8 /* rs1 */, u32 /* imm */),
+        /// Arithmetic Shift
+        Sra(u8 /* rd */, u8 /* rs1 */, u8 /* rs2 */),
+        Srai(u8 /* rd */, u8 /* rs1 */, u32 /* imm */),
 
-    Custom0(RType),
+        Custom0(RType),
 
-    /// System
-    Syscall(u32 /* something */),
+        /// System
+        Syscall(u32 /* something */),
+    }
 }
+pub use ix::*;
 
 impl Rv32ImInstruction {
     pub fn operands(&self) -> Vec<i32> {
@@ -492,13 +498,22 @@ pub fn rv32im_instruction(ir: u32) -> Rv32ImInstruction {
             //     3 => Rv32ImInstruction::BBDiv(rd, rs1, rs2),
             //     _ => panic!("Unknown custom func3: {}", func3),
             // }
-            Rv32ImInstruction::Custom0(RType { func3, func7, rd, rs1, rs2 })
+            Rv32ImInstruction::Custom0(RType {
+                func3,
+                func7,
+                rd,
+                rs1,
+                rs2,
+            })
         }
         OPCODE_SYSTEM => {
             let rs2 = decode_rs2!(ir);
             // panic!("Unrecognized opcode: {opcode} {:#034b} {:#010b}", ir, opcode);
             Rv32ImInstruction::Syscall(rs2 as u32)
         }
-        _ => panic!("Unrecognized opcode: {opcode} {:#034b} {:#010b}", ir, opcode),
+        _ => panic!(
+            "Unrecognized opcode: {opcode} {:#034b} {:#010b}",
+            ir, opcode
+        ),
     }
 }

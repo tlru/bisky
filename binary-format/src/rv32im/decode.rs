@@ -130,8 +130,10 @@ macro_rules! decode_j_imm {
 #[macro_export]
 macro_rules! decode_u_imm {
     ($ir:expr) => {
-        $crate::bit_concat!($crate::sized_bit_slice!($ir, 31, 12), $crate::sized_bit_extend!(0, 12))
-            as u32
+        $crate::bit_concat!(
+            $crate::sized_bit_slice!($ir, 31, 12),
+            $crate::sized_bit_extend!(0, 12)
+        ) as u32
     };
 }
 

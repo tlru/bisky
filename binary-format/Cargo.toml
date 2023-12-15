@@ -1,0 +1,22 @@
+[package]
+name = "bisqv-binary-format"
+description = "A library for handling ELF binary formats."
+version = "0.1.0"
+authors.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+[features]
+default = []
+std = ["elf/std", "anyhow/std"]
+
+[dependencies]
+tracing = "0.1.40"
+elf = { version = "0.7", default-features = false }
+anyhow = { version = "1.0", default-features = false }
+# platform = { path = "../platform" }
+goblin = "0.7"
+
+[dev-dependencies]
+tracing-subscriber = { version = "0.3", default-features = false, features = ["env-filter", "fmt", "ansi", "json"] }
+tracing-forest = { version = "0.1.6", features = ["ansi", "smallvec"] }

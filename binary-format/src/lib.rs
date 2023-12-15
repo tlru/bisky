@@ -53,7 +53,7 @@ pub fn load_elf(input: &[u8], max_mem: u32) -> anyhow::Result<MemoryImage> {
     // attempt to track the continuous text segment that we have an idea of where it starts from the linker script
     let mut text_segment: Option<(u32 /* start */, u32 /* size */)> = None;
 
-    /// These will not always be present
+    // These will not always be present
     let (shdrs_opt, strtab_opt) = elf
         .section_headers_with_strtab()
         .expect("shdrs offsets should be valid");
@@ -224,7 +224,7 @@ pub mod tests {
     //     Ok(())
     // }
 
-    fn init_test_logger() {
+    pub fn init_test_logger() {
         let env_filter = EnvFilter::builder()
             .with_default_directive(LevelFilter::DEBUG.into())
             .from_env_lossy();

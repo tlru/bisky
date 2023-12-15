@@ -207,20 +207,8 @@ pub fn instruction_name(ir: u32) -> &'static str {
                 (_, _) => panic!("Unknown arithmetic func3: {:#05b} {:#09b}", func3, func7),
             }
         }
-        OPCODE_CUSTOM => {
-            let func3 = decode_func3!(ir);
-            let func7 = decode_func3!(ir);
-            match func3 {
-                _ => panic!("Unknown custom func3: {}", func3),
-            }
-        }
-        OPCODE_SYSTEM => {
-            let func3 = decode_func3!(ir);
-            // match func3 {
-            //     _ => panic!("Unknown system func3: {}", func3),
-            // }
-            ""
-        }
+        OPCODE_CUSTOM_0 => "custom_0",
+        OPCODE_SYSTEM => "system",
         _ => panic!("Unrecognized opcode: {:#034b} {:#010b}", ir, opcode),
     }
 }

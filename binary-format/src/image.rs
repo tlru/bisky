@@ -15,7 +15,6 @@ impl MemoryImage {
         let (start, size) = self.text_region;
         self.image
             .range(start as u32..(start + size) as u32)
-            .into_iter()
             .map(|(program_counter, value)| (*program_counter, *value))
             .collect()
     }
@@ -24,7 +23,6 @@ impl MemoryImage {
         let (start, size) = self.rodata_region;
         self.image
             .range(start as u32..(start + size) as u32)
-            .into_iter()
             .map(|(program_counter, value)| (*program_counter, *value))
             .collect()
     }
@@ -33,7 +31,6 @@ impl MemoryImage {
         let (start, size) = self.rw_region;
         self.image
             .range(start as u32..(start + size) as u32)
-            .into_iter()
             .map(|(program_counter, value)| (*program_counter, *value))
             .collect()
     }
